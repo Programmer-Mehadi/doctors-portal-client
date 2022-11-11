@@ -27,14 +27,14 @@ const Testimonial = () => {
     ]
     return (
         <div>
-            <div className='flex justify-between'>
+            <div className='flex justify-between pt-12 md:pt-0'>
                 <div>
                     <h2 className='text-2xl text-secondary font-bold'>Testimonial</h2>
                     <h2 className='text-4xl font-semibold'>What Our Patients Says</h2>
                 </div>
                 <div><img className='h-[156px]' src={quote} alt="" /></div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto'>
                 {
                         testimonialData.map(testimonial=><TestimonialCard key={testimonial.id} testimonial={testimonial}></TestimonialCard>)
                 }

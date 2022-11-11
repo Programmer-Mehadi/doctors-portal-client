@@ -5,7 +5,7 @@ const TestimonialCard = ({ testimonial }) => {
     const { name, text, img, location } = testimonial;
     return (
         <div>
-            <div className="card w-96 bg-base-100 shadow-xl">
+            <div className="card shadow-xl">
                 <div className="card-body">
                     <h2 className="card-title">{text}</h2>
 
