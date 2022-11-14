@@ -5,6 +5,7 @@ import BookingModal from '../BookingModal/BookingModal';
 
 const AvailableAppointments = ({ selectedDate }) => {
     const [appointmentOptions, setAppointmentOptions] = useState([]);
+    const [bookingModalData, setBookingModalData] = useState({});
     useEffect(() => {
         fetch('AppointmentOptions.json')
             .then(res => res.json())
@@ -17,11 +18,13 @@ const AvailableAppointments = ({ selectedDate }) => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-24'>
                 {
                     appointmentOptions.map((option) =>
-                        <AppointmentOption key={option._id} appointment={option}></AppointmentOption>
+                        <AppointmentOption key={option._id} appointment={option} setBookingModalData={setBookingModalData}></AppointmentOption>
                     )
                 }
             </div>
-            <BookingModal></BookingModal>
+            {
+                bookingModalData && <BookingModal setBookingModalData={setBookingModalData} bookingModalData={bookingModalData} selectedDate={selectedDate}></BookingModal>
+            }
         </div>
     );
 };

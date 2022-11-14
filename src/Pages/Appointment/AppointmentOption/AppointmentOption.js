@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppointmentOption = ({ appointment }) => {
+const AppointmentOption = ({ appointment,setBookingModalData }) => {
     const { name, slots } = appointment;
     return (
         <div className="card bg-base-100 shadow-xl">
@@ -10,7 +10,7 @@ const AppointmentOption = ({ appointment }) => {
                 <p>{slots.length > 1 && `${slots.length} SPACES AVAILABLE`}</p>
                 <p>{slots.length < 1 && `${slots.length} SPACE AVAILABLE`}</p>
                 <div className="card-actions justify-center">
-                    <label htmlFor="booking-modal" className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Book Appointment</label>
+                    <label onClick={()=>setBookingModalData(appointment)} htmlFor="booking-modal" className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Book Appointment</label>
                 </div>
             </div>
         </div>
