@@ -34,7 +34,10 @@ const Signup = () => {
                     <label className="label">
                         <span className="label-text font-bold">Password</span>
                     </label>
-                    <input type='password' className='input input-bordered w-full' {...register("password", { required: "Password is required", minLength: 6 })} placeholder="password" />
+                    <input type='password' className='input input-bordered w-full' {...register("password", {
+                        required: "Password is required", minLength: 6,
+                        pattern: { value: /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/, message: "Password must be length(Atleast one [A-Z],[!@#$&*],[0-9],[a-z])" }
+                    })} placeholder="password" />
                     {
                         errors.password && <p className='text-red-500 my-1'>{errors.password.message}</p>
                     }
