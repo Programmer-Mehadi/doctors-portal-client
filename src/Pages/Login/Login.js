@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider';
 const Login = () => {
-    const { register,formState:{errors}, handleSubmit } = useForm();
+    const { signIn } = useContext(AuthContext);
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const [data, setData] = useState("");
     const handleLogin = (data) => {
         console.log(data)
-     }
+        signIn(data.email, data.password)
+            .then(result => console.log(result))
+            .catch(error => console.log(error))
+    }
     return (
         <div>
             <form className='grid grid-cols-1 gap-4 px-8 w-[90%] max-w-[500px] mx-auto py-12 my-12 shadow-md rounded' onSubmit={handleSubmit(handleLogin)}>
@@ -28,7 +33,7 @@ const Login = () => {
                     {
                         errors.password && <p className='text-red-500 my-1'>{errors.password.message}</p>
                     }
-                    {errors.password && errors.password.type === "minLength" &&  <p className='text-red-500 my-1'>Password length atleast 6 characters.</p> }
+                    {errors.password && errors.password.type === "minLength" && <p className='text-red-500 my-1'>Password length atleast 6 characters.</p>}
                     <p>Forget password?</p>
                 </div>
                 <p>{data}</p>
@@ -38,7 +43,7 @@ const Login = () => {
                     <hr className='w-full'/><span className='w-fit'>OR</span><hr className='w-full' />
                 </div> */}
                 <div className="divider">OR</div>
-                <p  className='btn hover:bg-secondary hover:text-white btn-outline-accent text-black bg-white'>CONTINUE WITH GOOGLE</p>
+                <p className='btn hover:bg-secondary hover:text-white btn-outline-accent text-black bg-white'>CONTINUE WITH GOOGLE</p>
             </form>
         </div>
     );
