@@ -1,16 +1,28 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Signup = () => {
-    const { createUser, googleSignupAndLogin } = useContext(AuthContext);
+    const { user, createUser, googleSignupAndLogin, updateUserProfile } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [data, setData] = useState("");
+    const navigate = useNavigate();
+    if (user?.uid) {
+       return navigate('/');
+    }
     const handleSignup = (data) => {
         console.log(data);
         createUser(data.email, data.password)
-            .then(result => console.log(result))
+            .then(result => {
+                console.log(result);
+                updateUserProfile(data.name)
+                    .then(res => {
+                        console.log(res);
+                        navigate('/');
+                    })
+                    .catch(error => console.error(error))
+            })
             .catch(error => console.log(error))
     }
     const googleSignup = () => {
