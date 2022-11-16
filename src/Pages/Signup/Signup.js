@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Signup = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, googleSignupAndLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [data, setData] = useState("");
     const handleSignup = (data) => {
@@ -12,6 +12,11 @@ const Signup = () => {
         createUser(data.email, data.password)
             .then(result => console.log(result))
             .catch(error => console.log(error))
+    }
+    const googleSignup = () => {
+        googleSignupAndLogin()
+            .then(result => console.log(result))
+            .catch(error => console.error(error))
     }
     return (
         <div>
@@ -56,7 +61,7 @@ const Signup = () => {
                 <hr className='w-full'/><span className='w-fit'>OR</span><hr className='w-full' />
             </div> */}
                 <div className="divider">OR</div>
-                <p className='btn hover:bg-secondary hover:text-white btn-outline-accent text-black bg-white'>CONTINUE WITH GOOGLE</p>
+                <p onClick={googleSignup} className='btn hover:bg-secondary hover:text-white btn-outline-accent text-black bg-white'>CONTINUE WITH GOOGLE</p>
             </form>
         </div>
     );
