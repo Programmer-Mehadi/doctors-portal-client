@@ -14,3 +14,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.rdp-day_selected, .rdp-day_selected:focus-visible, .rdp-day_selected:hover{
+  background-color: #0000ff !important;
+}

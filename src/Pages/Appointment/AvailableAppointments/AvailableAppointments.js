@@ -5,21 +5,16 @@ import AppointmentOption from '../AppointmentOption/AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
 
 const AvailableAppointments = ({ selectedDate }) => {
-    // const [appointmentOptions, setAppointmentOptions] = useState([]);
-    const [bookingModalData, setBookingModalData] = useState(null);
 
-    /* react query */
-    const { data: appointmentOptions = [], isLoading } = useQuery({
+    const [bookingModalData, setBookingModalData] = useState(null);
+    const date = format(selectedDate, 'PP');
+
+    const { data: appointmentOptions = [], isLoading, refetch } = useQuery({
         queryKey: ['appointmentoptions'],
-        queryFn: () => fetch('http://localhost:5000/appointmentoptions')
+        queryFn: () => fetch(`http://localhost:5000/appointmentoptions?date=${date}`)
             .then(res => res.json())
     })
 
-    // useEffect(() => {
-    //     fetch('http://localhost:5000/appointmentoptions')
-    //         .then(res => res.json())
-    //         .then(data => setAppointmentOptions(data))
-    // }, [])
 
     return (
         <div className='py-24 px-4'>
@@ -32,7 +27,7 @@ const AvailableAppointments = ({ selectedDate }) => {
                 }
             </div>
             {
-                bookingModalData && <BookingModal setBookingModalData={setBookingModalData} bookingModalData={bookingModalData} selectedDate={selectedDate}></BookingModal>
+                bookingModalData && <BookingModal setBookingModalData={setBookingModalData} bookingModalData={bookingModalData} selectedDate={selectedDate} refetch={refetch}></BookingModal>
             }
         </div>
     );

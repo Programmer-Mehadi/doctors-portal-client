@@ -10,7 +10,10 @@ const AppointmentOption = ({ appointment,setBookingModalData }) => {
                 <p>{slots.length > 1 && `${slots.length} SPACES AVAILABLE`}</p>
                 <p>{slots.length < 1 && `${slots.length} SPACE AVAILABLE`}</p>
                 <div className="card-actions justify-center">
-                    <label onClick={()=>setBookingModalData(appointment)} htmlFor="booking-modal" className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Book Appointment</label>
+                    {
+                        slots.length > 0 ? <label onClick={() => setBookingModalData(appointment)} htmlFor="booking-modal" className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Book Appointment</label> : 
+                        <label htmlFor="booking-modal" className="btn btn-accent btn-disabled text-black">Book Appointment</label>
+                    }
                 </div>
             </div>
         </div>
