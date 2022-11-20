@@ -1,16 +1,17 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import getToken from '../../Hooks/useToken';
 
 const Signup = () => {
     const { user, createUser, googleSignupAndLogin, updateUserProfile } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [data, setData] = useState("");
     const navigate = useNavigate();
-    if (user?.uid) {
-       return navigate('/');
-    }
+    // if (user?.uid) {
+    //     return navigate('/');
+    // }
     const handleSignup = (data) => {
         console.log(data);
         createUser(data.email, data.password)
@@ -19,7 +20,24 @@ const Signup = () => {
                 updateUserProfile(data.name)
                     .then(res => {
                         console.log(res);
-                        navigate('/');
+                        const userData = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        fetch(`http://localhost:5000/users`, {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(userData)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                getToken(userData?.email);
+                                navigate('/')
+                            })
+
                     })
                     .catch(error => console.error(error))
             })

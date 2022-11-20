@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import getToken from '../../Hooks/useToken';
 const Login = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -15,14 +16,14 @@ const Login = () => {
     const handleLogin = (data) => {
         signIn(data.email, data.password)
             .then(result => {
-                console.log(result)
+                getToken(data?.email);
                 navigate(from, { replace: true })
             })
             .catch(error => console.log(error))
     }
     const googleLogin = () => {
         googleSignupAndLogin()
-            .then(result => console.log(result))
+            .then(result => {})
             .catch(error => console.error(error))
     }
     return (
