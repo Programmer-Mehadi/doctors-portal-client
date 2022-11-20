@@ -1,19 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 const Login = () => {
-    const { user, signIn, googleSignupAndLogin } = useContext(AuthContext);
+
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [data, setData] = useState("");
+    const { user, signIn, googleSignupAndLogin } = useContext(AuthContext);
+    console.log(user);
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const navigate = useNavigate();
-    if (user?.uid) {
-        navigate('/');
-    }
     const handleLogin = (data) => {
-        console.log(data)
         signIn(data.email, data.password)
-            .then(result => console.log(result))
+            .then(result => {
+                console.log(result)
+                navigate(from, { replace: true })
+            })
             .catch(error => console.log(error))
     }
     const googleLogin = () => {
